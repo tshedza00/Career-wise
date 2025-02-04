@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Trend Over Time</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar, .footer {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        p {
+            margin-top: 20px;
+        }
+        #chatbox {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #fff;
+            height: 300px;
+            overflow-y: auto;
+            display: none; /* Initially hidden */
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .chat-icon:hover {
+            background-color: darkblue;
+        }
+        .message {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            max-width: 80%;
+            position: relative;
+        }
+        .bot-message {
+            background-color: #e1f5fe;
+            color: #333;
+            margin-left: auto; /* Align to the right */
+            border-radius: 5px 5px 5px 0; /* Rounded corners */
+        }
+        .user-message {
+            background-color: #c8e6c9;
+            color: #333;
+            margin-right: auto; /* Align to the left */
+            border-radius: 5px 5px 0 5px; /* Rounded corners */
+        }
+        .option-button {
+            margin: 5px 0;
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .option-button:hover {
+            background: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1 class="text-center" style="text-align: center;">Course & Career System</h1>
+</div>
+
+<div class="container">
+    <h1>Interest Entry Trend Over Time</h1>
+    <p>This graph shows the trend of interest entries made by users over time, displayed by day.</p>
+    
+    <div class="trend-image">
+        <img src="/static/interest_trend.png" alt="Interest Trend Over Time">
+    </div>
+    
+    <p>The chart visualizes the frequency of interest inputs on a daily basis. It helps us analyze user preferences and how they evolve over time.</p>
+    
+    <a href="/" class="btn btn-primary mt-4">Go Back to Home</a>
+</div>
+
+<div id="chatbox">
+    <h2>Chatbot</h2>
+    <div id="chat-content"></div>
+    <button id="menu-button" onclick="showOptions()">Menu</button>
+    <div id="options" style="display: none;"></div>
+</div>
+
+<button class="chat-icon" onclick="toggleChatbox()">💬</button> <!-- Chat icon -->
+
+<div class="footer text-center">
+    <p>&copy; 2024 Course & Career System. All rights reserved.</p>
+</div>
+
+<script>
+    // Toggle chatbox visibility
+    function toggleChatbox() {
+        const chatbox = document.getElementById('chatbox');
+        chatbox.style.display = chatbox.style.display === 'none' ? 'block' : 'none';
+        if (chatbox.style.display === 'block') {
+            chatContent.innerHTML += `<div class="bot-message">Bot: Hello! Click the 'Menu' button to get started.</div>`;
+            chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
+        }
+    }
+
+    function showOptions() {
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.style.display = 'block';
+        optionsDiv.innerHTML = `
+            <button class="option-button" onclick="selectOption(1)">How can I help you with AI?</button>
+            <button class="option-button" onclick="selectOption(2)">What are the benefits of using AI?</button>
+            <button class="option-button" onclick="selectOption(3)">How does AI improve decision-making?</button>
+            <button class="option-button" onclick="selectOption(4)">What AI tools can I use for my projects?</button>
+        `;
+        // Show options in chat content
+        const chatContent = document.getElementById('chat-content');
+        chatContent.innerHTML += `<div class="bot-message">Bot: Please select an option:</div>`;
+        chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
+    }
+
+    function selectOption(optionNumber) {
+        let response;
+        switch (optionNumber) {
+            case 1:
+                response = "I can assist you by answering your questions, providing recommendations, and guiding you through using AI effectively.";
+                break;
+            case 2:
+                response = "The benefits of using AI include increased efficiency, better decision-making, and the ability to analyze large datasets quickly.";
+                break;
+            case 3:
+                response = "AI improves decision-making by analyzing historical data, recognizing patterns, and providing data-driven insights.";
+                break;
+            case 4:
+                response = "Some popular AI tools include TensorFlow, PyTorch, and IBM Watson, each offering unique features for different projects.";
+                break;
+            default:
+                response = "Please select a valid option.";
+        }
+        // Display the response to the user
+        const chatContent = document.getElementById('chat-content');
+        chatContent.innerHTML += `<div class="bot-message">Bot: ${response}</div>`;
+        chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
+    }
+</script>
+
+</body>
+</html>
+
