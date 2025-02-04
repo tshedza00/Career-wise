@@ -1,0 +1,50 @@
+Grade,Course,University,Career,Interests,University_URL
+10,Computer Science,University of Cape Town,Software Developer,Technology,https://www.uct.ac.za
+10,Information Systems,University of Pretoria,System Analyst,Technology,https://www.up.ac.za
+10,Cyber Security,University of the Witwatersrand,Cybersecurity Specialist,Technology,https://www.wits.ac.za
+10,Software Engineering,University of Johannesburg,Software Engineer,Technology,https://www.uj.ac.za
+10,Graphic Design,Durban University of Technology,Graphic Designer,Arts,https://www.dut.ac.za
+11,Electrical Engineering,University of Cape Town,Electrical Engineer,Engineering,https://www.uct.ac.za
+11,Civil Engineering,University of Pretoria,Civil Engineer,Engineering,https://www.up.ac.za
+11,Mechanical Engineering,Stellenbosch University,Mechanical Engineer,Engineering,https://www.sun.ac.za
+11,Computer Engineering,University of the Witwatersrand,Computer Engineer,Engineering,https://www.wits.ac.za
+11,Environmental Science,University of Johannesburg,Environmental Consultant,Science,https://www.uj.ac.za
+12,Medicine,University of Cape Town,Doctor,Health,https://www.uct.ac.za
+12,Nursing,University of Pretoria,Nurse,Health,https://www.up.ac.za
+12,Business Management,University of Johannesburg,Entrepreneur,Business,https://www.uj.ac.za
+12,Marketing,University of Cape Town,Marketing Manager,Business,https://www.uct.ac.za
+12,Law,University of the Witwatersrand,Lawyer,Social Science,https://www.wits.ac.za
+9,Creative Arts,University of Cape Town,Art Director,Arts,https://www.uct.ac.za
+9,Film and Television,University of the Witwatersrand,Film Producer,Arts,https://www.wits.ac.za
+10,Information Technology,University of Pretoria,IT Consultant,Technology,https://www.up.ac.za
+10,Data Science,University of Cape Town,Data Scientist,Technology,https://www.uct.ac.za
+11,Architecture,University of Johannesburg,Architect,Engineering,https://www.uj.ac.za
+11,Actuarial Science,University of Cape Town,Actuary,Mathematics,https://www.uct.ac.za
+12,Economics,University of Pretoria,Economic Analyst,Business,https://www.up.ac.za
+12,Psychology,University of the Witwatersrand,Psychologist,Social Science,https://www.wits.ac.za
+12,Philosophy,University of Cape Town,Philosopher,Arts,https://www.uct.ac.za
+12,Statistics,University of Johannesburg,Statistician,Mathematics,https://www.uj.ac.za
+10,Marketing Management,North West University,Marketing Manager,Business,https://www.nwu.ac.za
+11,Business Administration,University of the Free State,Business Analyst,Business,https://www.ufs.ac.za
+10,Hospitality Management,University of Johannesburg,Hotel Manager,Business,https://www.uj.ac.za
+12,Public Relations,Cape Peninsula University of Technology,Public Relations Officer,Business,https://www.cput.ac.za
+11,Biomedical Engineering,University of Cape Town,Biomedical Engineer,Engineering,https://www.uct.ac.za
+10,Graphic Design,University of Johannesburg,Graphic Designer,Arts,https://www.uj.ac.za
+12,Sociology,University of Pretoria,Sociologist,Social Science,https://www.up.ac.za
+10,Information Systems,University of Cape Town,System Analyst,Technology,https://www.uct.ac.za
+11,Education,University of the Witwatersrand,Teacher,Education,https://www.wits.ac.za
+10,Media Studies,University of Johannesburg,Media Producer,Arts,https://www.uj.ac.za
+11,Social Work,University of Pretoria,Social Worker,Social Science,https://www.up.ac.za
+10,Pharmacy,University of the Western Cape,Pharmacist,Health,https://www.uwc.ac.za
+12,Agricultural Sciences,University of Pretoria,Agricultural Scientist,Science,https://www.up.ac.za
+12,Political Science,University of Cape Town,Political Scientist,Social Science,https://www.uct.ac.za
+10,Electrical Engineering,Vaal University of Technology,Electrical Engineer,Engineering,https://www.vut.ac.za
+10,Mechanical Engineering,Vaal University of Technology,Mechanical Engineer,Engineering,https://www.vut.ac.za
+10,Information Technology,Vaal University of Technology,IT Specialist,Technology,https://www.vut.ac.za
+11,Graphic Design,Vaal University of Technology,Graphic Designer,Arts,https://www.vut.ac.za
+11,Public Relations,Vaal University of Technology,Public Relations Officer,Business,https://www.vut.ac.za
+12,Logistics,Vaal University of Technology,Logistics Manager,Business,https://www.vut.ac.za
+12,Business Management,Vaal University of Technology,Business Manager,Business.,https://www.vut.ac.za
+11,Environmental Management,Vaal University of Technology,Environmental Consultant,Science,https://www.vut.ac.za
+
+
