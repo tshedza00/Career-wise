@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        async function fetchSuggestedInterest() {
+            const interestInput = document.getElementById("interests").value;
+            if (interestInput) {
+                // Make an AJAX request to get the suggested interest
+                const response = await fetch(`/suggest?interest=${encodeURIComponent(interestInput)}`);
+                const data = await response.json();
+                // Display the suggested interest if available
+                const suggestionDiv = document.getElementById("suggestion");
+                suggestionDiv.textContent = data.suggested_interest 
+                                            ? `Suggested Interest: ${data.suggested_interest}` 
+                                            : "No suggestions available.";
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Optional: Set a light background color */
+        }
+        .navbar, .footer {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        /* Styles for the floating chatbot button */
+        .chatbot-button {
+            position: fixed;
+            bottom: 80px; /* Adjusted to sit above the footer */
+            right: 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        /* Styles for the chatbot container */
+        #chat-container {
+            display: none; /* Initially hidden */
+            position: fixed;
+            bottom: 80px; /* Align with the button above the footer */
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+            z-index: 1000;
+        }
+        #chatbox {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+        }
+        #options {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+   
+    <div class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px;background-color: black;">
+        <div style="flex: 1; display: flex; align-items: center;">
+            <img src="/static/AI Logo.jpg" alt="logo" style="height: 60px; width: auto; border-radius: 50px; margin-right: 15px;">
+        </div>
+        <h1 style="flex: 2; text-align: center; margin: 0;">Course & Career System</h1>
+        <div style="flex: 1; display: flex; justify-content: flex-end;">
+            <a href="/interest_trends" 
+               style="padding: 10px 15px; background-color: #007BFF; color: white; 
+                      text-decoration: none; border-radius: 5px; font-weight: bold; 
+                      transition: background-color 0.3s;">
+                View Time Series
+            </a>
+        </div>
+    </div>
+    
+    
+
+    <div class="container">
+       
+        <!-- Display error message if it exists -->
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+       
+        <form action="/recommend" method="post">
+            <label for="grade">Select Your Grade:</label>
+            <select name="grade" id="grade">
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+
+            <label for="interests">Your Interests:</label>
+            <input type="text" name="interests" id="interests" required oninput="fetchSuggestedInterest()">
+            <button type="button" id="listen-button" onclick="startListening()">Listen</button>
+            <button type="button" id="start-record-btn">🎤</button> <!-- Button for speech recognition -->
+            <div id="suggestion" style="color: blue; margin-top: 5px;"></div>
+
+            <input type="submit" value="Get Recommendations" style="background-color: blue; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+        </form>
+
+        <!-- Chatbot container -->
+        <div id="chat-container">
+            <div id="chatbox"></div>
+            <button id="menu-button" onclick="showOptions()">Menu</button>
+            <div id="options" style="display: none;"></div>
+        </div>
+
+        <button class="chatbot-button" onclick="toggleChat()">🤖</button> <!-- Floating chatbot button -->
+        
+        <script>
+            document.getElementById("start-record-btn").onclick = function() {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US'; // You can change the language
+                recognition.start();
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById("interests").value = transcript; // Set the input value
+                };
+
+                recognition.onerror = function(event) {
+                    console.error("Speech recognition error: " + event.error);
+                };
+            };
+
+            // Display the menu button when the page loads
+            document.getElementById('menu-button').style.display = 'inline';
+            document.getElementById('chatbox').innerHTML += '<div>Bot: Hello! Click the "Menu" button to get started.</div>';
+
+            function showOptions() {
+                // Hide the menu button and show options
+                document.getElementById('menu-button').style.display = 'none';
+                const optionsDiv = document.getElementById('options');
+                optionsDiv.style.display = 'block';
+                optionsDiv.innerHTML = `
+                    <button class="option-button" onclick="selectOption(1)">How to use the website?</button>
+                    <button class="option-button" onclick="selectOption(2)">What are the benefits of using AI?</button>
+                    <button class="option-button" onclick="selectOption(3)">How does AI improve decision-making?</button>
+                    <button class="option-button" onclick="selectOption(4)">What AI tools can I use for my projects?</button>
+                `;
+                // Show options in chatbox
+                document.getElementById('chatbox').innerHTML += '<div>Bot: Please select an option:</div>';
+            }
+
+            function selectOption(optionNumber) {
+                let response;
+                switch (optionNumber) {
+                    case 1:
+                        response = "You can choose your grade and enter an interest then hit the 'Get Recommendations' button.";
+                        break;
+                    case 2:
+                        response = "The benefits of using AI include increased efficiency, better decision-making, and the ability to analyze large datasets quickly.";
+                        break;
+                    case 3:
+                        response = "AI improves decision-making by analyzing historical data, recognizing patterns, and providing data-driven insights.";
+                        break;
+                    case 4:
+                        response = "Some popular AI tools include TensorFlow, PyTorch, and IBM Watson, each offering unique features for different projects.";
+                        break;
+                    default:
+                        response = "Please select a valid option.";
+                }
+                // Display the response to the user
+                chatbox.innerHTML += `<div>Bot: ${response}</div>`;
+                chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+            }
+
+            function toggleChat() {
+                const chatContainer = document.getElementById('chat-container');
+                chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
+            }
+        </script>
+    </div>
+
+    <div class="footer" style="margin-top: 18%;background-color: black;">
+        <p>&copy; 2024 Course & Career System. All rights reserved.</p>
+    </div>
+</body>
+</html>
+
+
+
+
