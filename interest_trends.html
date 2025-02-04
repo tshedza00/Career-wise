@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Trends</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4; /* Light grey background */
+            color: black; /* Black text for readability */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full height of viewport */
+        }
+       
+        .nav-link {
+            color: white; /* White text for links */
+        }
+        .nav-link:hover {
+            color: #f0f0f0; /* Slightly lighter text on hover */
+        }
+        .container {
+            background-color: white; /* White background for the main container */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better contrast */
+        }
+        h2 {
+            color: blue; /* Blue heading for consistency */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        table {
+            margin-top: 20px;
+        }
+        thead th {
+            background-color: blue; /* Blue table header */
+            color: white; /* White text in the header */
+        }
+        tbody tr {
+            background-color: #f9f9f9; /* Alternating light grey for rows */
+        }
+        tbody tr:nth-child(even) {
+            background-color: #ececec; /* Slightly darker for contrast */
+        }
+        .footer {
+            background-color: blue; /* Blue footer */
+            color: white; /* White text */
+            padding: 15px 0;
+            text-align: center;
+            margin-top: auto; /* Stick footer to the bottom */
+            width: 100%;
+        }
+        .footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navbar -->
+    <div class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px;background-color: black;">
+        <div style="flex: 1; display: flex; align-items: center;">
+            <img src="/static/AI Logo.jpg" alt="logo" style="height: 60px; width: auto; border-radius: 50px; margin-right: 15px;">
+        </div>
+        <h2 style="flex: 2; text-align: center; margin: 0;" style="color: #ececec;"><b style="color: #ececec;">Course & Career System</b></h2>
+        <div style="flex: 1; display: flex; justify-content: flex-end;">
+            <a href="/interest_trends" 
+               style="padding: 10px 15px; background-color: #007BFF; color: white; 
+                      text-decoration: none; border-radius: 5px; font-weight: bold; 
+                      transition: background-color 0.3s;">
+                View Time Series
+            </a>
+        </div>
+    </div>
+    
+
+    <div class="container mt-5">
+        <h2 class="text-center">Interest Trends Over Time</h2>
+        {% if trends is not none and trends.shape[0] > 0 %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Number of Entries</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in trends.iterrows() %}
+                        <tr>
+                            <td>{{ row['Interest'] }}</td>
+                            <td>{{ row['Count'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        {% else %}
+            <p class="text-center">No data available for trends.</p>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="background-color: black;">
+        <div class="container">
+            <p style="color: black;">&copy; {{ current_year }} Interest Tracker. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
