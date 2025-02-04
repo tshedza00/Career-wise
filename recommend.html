@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #e9ecef;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-link:hover {
+            background: #0056b3;
+        }
+
+        #chatbox {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #fff;
+            height: 300px;
+            overflow-y: auto;
+            display: none;
+            /* Initially hidden */
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+
+        .chat-icon:hover {
+            background-color: #cfe3f8;
+        }
+
+        .message {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: #e1f5fe;
+            color: #333;
+            margin-left: auto;
+            /* Align to the right */
+            border-radius: 5px 5px 5px 0;
+            /* Rounded corners */
+        }
+
+        .user-message {
+            background-color: #c8e6c9;
+            color: #333;
+            margin-right: auto;
+            /* Align to the left */
+            border-radius: 5px 5px 0 5px;
+            /* Rounded corners */
+        }
+
+        .option-button {
+            margin: 5px 0;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .option-button:hover {
+            background: #0056b3;
+        }
+
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px;background-color: black;">
+        <div style="flex: 1; display: flex; align-items: center;">
+            <img src="/static/AI Logo.jpg" alt="logo" style="height: 60px; width: auto; border-radius: 50px; margin-right: 15px;">
+        </div>
+        <h1 style="flex: 2; text-align: center; margin: 0;">Course & Career System</h1>
+        <div style="flex: 1; display: flex; justify-content: flex-end;">
+            <a href="/interest_trends" 
+               style="padding: 10px 15px; background-color: #007BFF; color: white; 
+                      text-decoration: none; border-radius: 5px; font-weight: bold; 
+                      transition: background-color 0.3s;">
+                View Time Series
+            </a>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% else %}
+        <p>Based on your interests in <strong>{{ interests }}</strong>:</p>
+
+        <h2>Recommended Courses:</h2>
+        <ul>
+            {% for course in courses %}
+            <li>{{ course }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Recommended Universities:</h2>
+        <ul>
+            {% for i in range(universities|length) %}
+            <li>
+                <a href="{{ university_urls[i] }}" target="_blank">{{ universities[i] }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Recommended Career Paths:</h2>
+        <ul>
+            {% for career in careers %}
+            <li>{{ career }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if dl_prediction is not none %}
+        <!-- Additional content can go here -->
+        {% endif %}
+        {% endif %}
+
+        <div id="chatbox">
+            <h2>Chatbot</h2>
+            <div id="chat-content"></div>
+            <button id="menu-button" onclick="showOptions()">Menu</button>
+            <div id="options" style="display: none;"></div>
+        </div>
+
+        <button class="chat-icon" onclick="toggleChatbox()">💬</button> <!-- Chat icon -->
+
+
+        <script>
+            // Toggle chatbox visibility
+            function toggleChatbox() {
+                const chatbox = document.getElementById('chatbox');
+                chatbox.style.display = chatbox.style.display === 'none' ? 'block' : 'none';
+                if (chatbox.style.display === 'block') {
+                    chatContent.innerHTML += `<div class="bot-message">Bot: Hello! Click the 'Menu' button to get started.</div>`;
+                }
+            }
+
+            function showOptions() {
+                const optionsDiv = document.getElementById('options');
+                optionsDiv.style.display = 'block';
+                optionsDiv.innerHTML = `
+                    <button class="option-button" onclick="selectOption(1)">How can I help you with AI?</button>
+                    <button class="option-button" onclick="selectOption(2)">What are the benefits of using AI?</button>
+                    <button class="option-button" onclick="selectOption(3)">How does AI improve decision-making?</button>
+                    <button class="option-button" onclick="selectOption(4)">What AI tools can I use for my projects?</button>
+                `;
+                // Show options in chat content
+                const chatContent = document.getElementById('chat-content');
+                chatContent.innerHTML += `<div class="bot-message">Bot: Please select an option:</div>`;
+            }
+
+            function selectOption(optionNumber) {
+                let response;
+                switch (optionNumber) {
+                    case 1:
+                        response = "I can assist you by answering your questions, providing recommendations, and guiding you through using AI effectively.";
+                        break;
+                    case 2:
+                        response = "The benefits of using AI include increased efficiency, better decision-making, and the ability to analyze large datasets quickly.";
+                        break;
+                    case 3:
+                        response = "AI improves decision-making by analyzing historical data, recognizing patterns, and providing data-driven insights.";
+                        break;
+                    case 4:
+                        response = "Some popular AI tools include TensorFlow, PyTorch, and IBM Watson, each offering unique features for different projects.";
+                        break;
+                    default:
+                        response = "Please select a valid option.";
+                }
+                // Display the response to the user
+                const chatContent = document.getElementById('chat-content');
+                chatContent.innerHTML += `<div class="bot-message">Bot: ${response}</div>`;
+                chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
+            }
+        </script>
+        <a class="back-link" href="/">Go Back</a>
+    </div>
+
+    <footer style="background-color: black;">
+        <p>&copy; 2024 Course & Career System. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>
